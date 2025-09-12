@@ -195,6 +195,11 @@ type Aside struct {
 	Container
 }
 
+// CalloutBlock represents a callout block node
+type CalloutBlock struct {
+	Container
+}
+
 // List represents markdown list node
 type List struct {
 	Container

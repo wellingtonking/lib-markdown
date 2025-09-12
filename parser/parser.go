@@ -45,6 +45,7 @@ const (
 	EmptyLinesBreakList                           // 2 empty lines break out of list
 	Includes                                      // Support including other files.
 	Mmark                                         // Support Mmark syntax, see https://mmark.miek.nl/post/syntax/
+	Callouts                                      // Support callout blocks using '(' prefix
 
 	CommonExtensions Extensions = NoIntraEmphasis | Tables | FencedCode |
 		Autolink | Strikethrough | SpaceHeadings | HeadingIDs |
@@ -233,7 +234,7 @@ func canNodeContain(n ast.Node, v ast.Node) bool {
 	switch n.(type) {
 	case *ast.List:
 		return isListItem(v)
-	case *ast.Document, *ast.BlockQuote, *ast.Aside, *ast.ListItem, *ast.CaptionFigure:
+	case *ast.Document, *ast.BlockQuote, *ast.Aside, *ast.ListItem, *ast.CaptionFigure, *ast.CalloutBlock:
 		return !isListItem(v)
 	case *ast.Table:
 		switch v.(type) {
