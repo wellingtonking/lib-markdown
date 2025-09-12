@@ -572,6 +572,10 @@ func (r *Renderer) paragraphEnter(w io.Writer, para *ast.Paragraph) {
 		if isParentAside {
 			r.CR(w)
 		}
+		_, isParentCallout := para.Parent.(*ast.CalloutBlock)
+		if isParentCallout {
+			r.CR(w)
+		}
 	}
 
 	ptag := "<p"
@@ -993,6 +997,14 @@ func (r *Renderer) Callout(w io.Writer, node *ast.Callout) {
 	r.Outs(w, "</span>")
 }
 
+// CalloutBlock writes ast.CalloutBlock node
+func (r *Renderer) CalloutBlock(w io.Writer, node *ast.CalloutBlock, entering bool) {
+	attrs := []string{`class="callout"`}
+	attrs = append(attrs, BlockAttrs(node)...)
+	tag := TagWithAttributes("<div", attrs)
+	r.OutOneOfCr(w, entering, tag, "</div>")
+}
+
 // Index writes ast.Index node
 func (r *Renderer) Index(w io.Writer, node *ast.Index) {
 	// there is no in-text representation.
@@ -1028,6 +1040,8 @@ func (r *Renderer) RenderNode(w io.Writer, node ast.Node, entering bool) ast.Wal
 	case *ast.BlockQuote:
 		tag := TagWithAttributes("<blockquote", BlockAttrs(node))
 		r.OutOneOfCr(w, entering, tag, "</blockquote>")
+	case *ast.CalloutBlock:
+		r.CalloutBlock(w, node, entering)
 	case *ast.Aside:
 		tag := TagWithAttributes("<aside", BlockAttrs(node))
 		r.OutOneOfCr(w, entering, tag, "</aside>")

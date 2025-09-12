@@ -279,6 +279,17 @@ func (p *Parser) Block(data []byte) {
 			continue
 		}
 
+		// callout:
+		//
+		// ( This is a callout
+		// ( spanning multiple lines
+		if p.extensions&Callouts != 0 {
+			if p.calloutPrefix(data) > 0 {
+				data = data[p.callout(data):]
+				continue
+			}
+		}
+
 		// aside:
 		//
 		// A> The proof is too large to fit
