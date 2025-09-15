@@ -259,12 +259,15 @@ func (r *Renderer) codeBlock(w io.Writer, node *ast.CodeBlock) {
 		break
 	}
 
-	if count == 0 {
-		r.outs(w, "```")
-	}
-	r.outs(w, "\n")
-	r.out(w, text)
-	r.outs(w, "```\n\n")
+        if count == 0 {
+                r.outs(w, "```")
+        }
+        r.outs(w, "\n")
+        r.out(w, text)
+        if len(text) == 0 || text[len(text)-1] != '\n' {
+                r.outs(w, "\n")
+        }
+        r.outs(w, "```\n\n")
 }
 
 func (r *Renderer) code(w io.Writer, node *ast.Code) {

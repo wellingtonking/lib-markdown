@@ -71,10 +71,10 @@ func TestRenderCode(t *testing.T) {
 }
 
 func TestRenderCodeBlock(t *testing.T) {
-	input := &ast.CodeBlock{Info: []byte(string("scala"))}
-	input.Literal = []byte(string("val x : Int = 42"))
-	expected := "\n```scala\nval x : Int = 42\n```\n"
-	testRendering(t, input, expected)
+        input := &ast.CodeBlock{Info: []byte(string("scala"))}
+        input.Literal = []byte(string("val x : Int = 42"))
+        expected := "\n```scala\nval x : Int = 42\n```\n\n"
+        testRendering(t, input, expected)
 }
 
 func TestRenderParagraph(t *testing.T) {
